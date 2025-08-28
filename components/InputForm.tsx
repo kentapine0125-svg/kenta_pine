@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { TruckInfo } from '../types.ts';
-import { CalendarIcon, TruckIcon, BarcodeIcon, KeyIcon } from './icons.tsx';
+import { CalendarIcon, TruckIcon, KeyIcon, HelpIcon } from './icons.tsx';
 
 interface InputFormProps {
   onStartScanning: (info: TruckInfo) => void;
@@ -10,6 +10,7 @@ const InputForm: React.FC<InputFormProps> = ({ onStartScanning }) => {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [truckNumber, setTruckNumber] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     const savedApiKey = localStorage.getItem('gemini_api_key');
@@ -34,9 +35,9 @@ const InputForm: React.FC<InputFormProps> = ({ onStartScanning }) => {
   return (
     <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-lg">
       <div className="text-center">
-        <BarcodeIcon className="w-16 h-16 mx-auto text-indigo-500" />
+        <TruckIcon className="w-16 h-16 mx-auto text-indigo-500" />
         <h1 className="mt-4 text-3xl font-bold text-gray-900">トラックカートスキャナー</h1>
-        <p className="mt-2 text-sm text-gray-600">トラック情報とAPIキーを入力してスキャンを開始してください。</p>
+        <p className="mt-2 text-sm text-gray-600">情報を入力してスキャンを開始してください。</p>
       </div>
       <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="rounded-md shadow-sm -space-y-px">
@@ -56,6 +57,21 @@ const InputForm: React.FC<InputFormProps> = ({ onStartScanning }) => {
                 value={apiKey}
                 onChange={handleApiKeyChange}
               />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                  onClick={() => setShowTooltip(!showTooltip)}
+                >
+                  <HelpIcon className="h-5 w-5 text-gray-400 cursor-pointer" />
+                  {showTooltip && (
+                    <div className="absolute bottom-full mb-2 -right-4 w-64 p-2 bg-gray-800 text-white text-xs rounded-md shadow-lg z-20">
+                      APIキーは画像解析に必要です。入力されたキーは、お使いのブラウザに安全に保存され、外部に送信されることはありません。
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           <div>
