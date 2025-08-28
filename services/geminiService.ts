@@ -1,21 +1,22 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
 let ai: GoogleGenAI | null = null;
+let lastUsedApiKey: string | null = null;
 
 function getGoogleAI(): GoogleGenAI {
-  if (ai) {
-    return ai;
-  }
-
-  // This relies on the environment variable being set in the deployment environment.
-  const API_KEY = typeof process !== 'undefined' && process.env ? process.env.API_KEY : undefined;
+  const API_KEY = localStorage.getItem('gemini_api_key');
 
   if (!API_KEY) {
     // This error will be caught by the calling function and displayed to the user.
-    throw new Error("APIキーが設定されていません。デプロイ環境で 'API_KEY' 環境変数を設定してください。");
+    throw new Error("APIキーが設定されていません。最初の画面でAPIキーを入力してください。");
   }
   
-  ai = new GoogleGenAI({ apiKey: API_KEY });
+  // Create a new instance if the API key has changed or if it's the first run
+  if (API_KEY !== lastUsedApiKey || !ai) {
+    ai = new GoogleGenAI({ apiKey: API_KEY });
+    lastUsedApiKey = API_KEY;
+  }
+
   return ai;
 }
 
