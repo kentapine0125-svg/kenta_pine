@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
-import { AppState, TruckInfo, ScannedRecord } from './types';
-import InputForm from './components/InputForm';
-import CameraScanner from './components/CameraScanner';
-import ResultsTable from './components/ResultsTable';
+import { AppState, TruckInfo, ScannedRecord } from './types.ts';
+import InputForm from './components/InputForm.tsx';
+import CameraScanner from './components/CameraScanner.tsx';
+import ResultsTable from './components/ResultsTable.tsx';
 
 function App() {
   const [appState, setAppState] = useState<AppState>(AppState.INPUT);

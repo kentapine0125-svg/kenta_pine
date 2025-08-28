@@ -1,7 +1,8 @@
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { extractTextFromImage } from '../services/geminiService';
-import Spinner from './Spinner';
-import { CameraIcon } from './icons';
+import { extractTextFromImage } from '../services/geminiService.ts';
+import Spinner from './Spinner.tsx';
+import { CameraIcon } from './icons.tsx';
 
 interface CameraScannerProps {
   onScan: (tagIds: string[]) => void;

@@ -1,6 +1,7 @@
+
 import React from 'react';
-import type { ScannedRecord } from '../types';
-import { ExportIcon } from './icons';
+import type { ScannedRecord } from '../types.ts';
+import { ExportIcon } from './icons.tsx';
 
 interface ResultsTableProps {
   records: ScannedRecord[];

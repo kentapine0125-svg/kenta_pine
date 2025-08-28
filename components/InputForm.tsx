@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
-import type { TruckInfo } from '../types';
-import { CalendarIcon, TruckIcon, BarcodeIcon } from './icons';
+import type { TruckInfo } from '../types.ts';
+import { CalendarIcon, TruckIcon, BarcodeIcon } from './icons.tsx';
 
 interface InputFormProps {
   onStartScanning: (info: TruckInfo) => void;
